@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <array>
 #include <random>
+#include <algorithm>
 
 using filter_array = std::array<double,10>;
 
@@ -21,14 +22,14 @@ struct Device
 {
     DeviceState state { DeviceState::UNDEFINED };
 
-    // Zufallsgenerator für die Messung
+    // Zufallsgenerator für die Messung der Geschwindigkeit
     std::mt19937 generator;
 	std::normal_distribution<double> distribution;
-
     double measurement { 0.0 };
 
-    uint32_t lastPosition { 0 };
-    filter_array filterValues { 0 };
+    // Filter
+    filter_array filterValues { 0.0 };
+    double filterValue { 0.0 };
 };
 
 // Initialisiere das Gerät

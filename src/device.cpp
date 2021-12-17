@@ -1,41 +1,48 @@
 #include "device.hpp"
 
 
-void Initialize_Device(Device& device, double speed_mean, double speed_stddev)
+void Initialize_Device(Device& dev, double speed_mean, double speed_stddev)
 {
-    device.state = DeviceState::INITILIZED;
+    dev.state = DeviceState::INITILIZED;
 
     std::random_device rd {};
-	device.generator = std::mt19937 {rd()};
-	device.distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
+	dev.generator = std::mt19937 {rd()};
+	dev.distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
+
+    std::for_each(dev.filterValues.begin(), dev.filterValues.end(), [&speed_mean](double& d){d = speed_mean;});
 }
 
 
-double Measure_Velocity(Device& device)
+double Measure_Velocity(Device& dev)
 {
-    device.state = DeviceState::MEASURED;
+    dev.state = DeviceState::MEASURED;
 
-    device.measurement = device.distribution(device.generator);
+    dev.measurement = dev.distribution(dev.generator);
 
-    return device.measurement;
+    return dev.measurement;
 }
 
 
-double Filter_Velocity(Device& device)
+double Filter_Velocity(Device& dev)
 {
-    device.state = DeviceState::FILTERED;
-    return 2.0;
+    dev.state = DeviceState::FILTERED;
+
+    std::rotate(dev.filterValues.begin(), dev.filterValues.begin() + 1, dev.filterValues.end());
+    dev.filterValues.at(0) = dev.measurement;
+    dev.filterValue = std::accumulate(dev.filterValues.begin(), dev.filterValues.end(), 0) / dev.filterValues.size();
+
+    return dev.filterValue;
 }
 
 
-double Calculate_Position(Device& device)
+double Calculate_Position(Device& dev)
 {
-    device.state = DeviceState::CALCULATED;
+    dev.state = DeviceState::CALCULATED;
     return 3.0;
 }
 
 
-void Plot(Device& device)
+void Plot(Device& dev)
 {
-    device.state = DeviceState::PLOTTED;
+    dev.state = DeviceState::PLOTTED;
 }
