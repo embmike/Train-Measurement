@@ -22,7 +22,7 @@ struct Device
 {
     DeviceState state { DeviceState::UNDEFINED };
 
-    // Zufallsgenerator für die Messung der Geschwindigkeit
+    // Zufallsgenerator für die Geschwindigkeitsmessung
     std::mt19937 generator;
 	std::normal_distribution<double> distribution;
     double measurement { 0.0 };

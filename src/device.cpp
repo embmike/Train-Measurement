@@ -6,7 +6,7 @@ void Initialize_Device( Device& dev, double speed_mean, double speed_stddev, dou
 {
     dev.state = DeviceState::INITILIZED;
 
-    // Zufallsgenerator für die Messung der Geschwindigkeit
+    // Zufallsgenerator für die Geschwindigkeitsmessung
     std::random_device rd {};
 	dev.generator = std::mt19937 {rd()};
 	dev.distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
@@ -14,7 +14,7 @@ void Initialize_Device( Device& dev, double speed_mean, double speed_stddev, dou
     // Initialisiere Filter mit dem Mittelwert
     std::for_each(dev.filterValues.begin(), dev.filterValues.end(), [&speed_mean](double& d){d = speed_mean;});
 
-    // Initialisiere die Matrizen für die Wegberechnung
+    // Abtastrate
     dev.dt = dt;
 }
 
@@ -33,6 +33,7 @@ double Filter_Velocity(Device& dev)
 {
     dev.state = DeviceState::FILTERED;
 
+    // Gleitender Mittelwertfilter
     std::rotate(dev.filterValues.rbegin(), dev.filterValues.rbegin() + 1, dev.filterValues.rend());
     dev.filterValues.at(0) = dev.measurement;
     dev.filterValue = std::accumulate(dev.filterValues.begin(), dev.filterValues.end(), 0) / dev.filterValues.size();
