@@ -14,7 +14,10 @@ void Initialize_Device(Device& device, double speed_mean, double speed_stddev)
 double Measure_Velocity(Device& device)
 {
     device.state = DeviceState::MEASURED;
-    return 1.0;
+
+    device.measurement = device.distribution(device.generator);
+
+    return device.measurement;
 }
 
 

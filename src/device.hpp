@@ -25,6 +25,8 @@ struct Device
     std::mt19937 generator;
 	std::normal_distribution<double> distribution;
 
+    double measurement { 0.0 };
+
     uint32_t lastPosition { 0 };
     filter_array filterValues { 0 };
 };

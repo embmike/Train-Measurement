@@ -1,5 +1,7 @@
 #include <iostream>
+#include <array>
 #include "device.hpp"
+
 
 int main(int, char**)
 {
