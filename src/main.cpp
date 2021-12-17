@@ -7,18 +7,17 @@ int main(int, char**)
 {
     // Erstelle Device und lege Parameter fest
     Device device;
-    constexpr double speed_mean {80.0};
-    constexpr double speed_stddev {8.0};
-    constexpr double dt {0.1};  //100ms
-    constexpr double time {10.0}; //10s
+    constexpr double speed_mean { 80.0 };  // m/s
+    constexpr double speed_stddev { 8.0 }; // m/s
+    constexpr double dt { 0.1 };    // 100ms
+    constexpr double time { 10.0 }; // 10s
     constexpr uint32_t samples { static_cast<uint32_t>(time / dt) };
-    uint32_t counter { 0 };
 
     // Initialisiere das Gerät
     Initialize_Device(device, speed_mean, speed_stddev, dt);
 
     // Fahre mit dem Gerät
-    while( counter < samples )
+    for(uint32_t counter = 0; counter < samples; counter++)
     {
         // Messen die Geschwindigkeit
         Measure_Velocity(device);
@@ -31,7 +30,5 @@ int main(int, char**)
 
         // Plotte ein Weg-Zeit-Deiagramm
         Plot(device);
-
-        counter++;
     }
 }
