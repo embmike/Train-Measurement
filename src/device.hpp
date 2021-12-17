@@ -27,13 +27,17 @@ struct Device
 	std::normal_distribution<double> distribution;
     double measurement { 0.0 };
 
-    // Filter
+    // Filter der Geschwindigkeit
     filter_array filterValues { 0.0 };
     double filterValue { 0.0 };
+
+    // Berechnung der Position
+    double dt { 0.1 };
+    double position { 0.0 };
 };
 
 // Initialisiere das Gerät
-void Initialize_Device(Device&, double speed_mean, double speed_stddev);
+void Initialize_Device(Device&, double speed_mean, double speed_stddev, double dt);
 
 // Messen die Geschwindigkeit
 double Measure_Velocity(Device&);
