@@ -3,11 +3,13 @@
 
 int main(int, char**)
 {
-    // Erstelle Device
+    // Erstelle Device und lege Parameter fest
     Device device;
+    double speed_mean {80.0f};
+    double speed_stddev {8.0f};
 
     // Initialisiere das Gerät
-    Initialize_Device(device);
+    Initialize_Device(device, speed_mean, speed_stddev);
 
     // Messen die Geschwindigkeit
     Measure_Velocity(device);

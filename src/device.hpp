@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <array>
+#include <random>
 
 using filter_array = std::array<double,10>;
 
@@ -19,12 +20,17 @@ enum struct DeviceState
 struct Device
 {
     DeviceState state { DeviceState::UNDEFINED };
+
+    // Zufallsgenerator für die Messung
+    std::mt19937 generator;
+	std::normal_distribution<double> distribution;
+
     uint32_t lastPosition { 0 };
     filter_array filterValues { 0 };
 };
 
 // Initialisiere das Gerät
-void Initialize_Device(Device&);
+void Initialize_Device(Device&, double speed_mean, double speed_stddev);
 
 // Messen die Geschwindigkeit
 double Measure_Velocity(Device&);

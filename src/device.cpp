@@ -1,9 +1,13 @@
 #include "device.hpp"
 
 
-void Initialize_Device(Device& device)
+void Initialize_Device(Device& device, double speed_mean, double speed_stddev)
 {
     device.state = DeviceState::INITILIZED;
+
+    std::random_device rd {};
+	device.generator = std::mt19937 {rd()};
+	device.distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
 }
 
 
