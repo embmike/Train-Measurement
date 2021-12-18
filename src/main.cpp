@@ -14,11 +14,11 @@ namespace TestSet
 }
 
 // Berechne alle für jeden Abtastwert
-void for_each_sample(uint32_t& counter, const uint32_t size, std::function<void(void)> drive)
+void for_each_sample(Device& dev, uint32_t& counter, const uint32_t size, std::function<void(Device& device)> drive)
 {
     for(; counter < size; counter++)
     {
-        drive();
+        drive(dev);
     }
 }
 
@@ -28,19 +28,20 @@ int main(int, char**)
     Initialize_Device(TestSet::device, TestSet::speed_mean, TestSet::speed_stddev, TestSet::dt);
 
     // Fahre mit dem Gerät
-    auto Drive_Device = [](){
+    auto Drive_Device = [](Device& device){
         // Messen die Geschwindigkeit
-        Measure_Velocity(TestSet::device);
+        Measure_Velocity(device);
 
         // Filtere die Geschwindigkeit
-        Filter_Velocity(TestSet::device);
+        Filter_Velocity(device);
 
         // Brechne den Weg
-        Calculate_Position(TestSet::device);
+        Calculate_Position(device);
 
         // Plotte ein Weg-Zeit-Deiagramm
-        Plot(TestSet::device);
+        Plot(device);
     };
 
-    for_each_sample(TestSet::counter, TestSet::samples, Drive_Device);
+    // Endlich fahren
+    for_each_sample(TestSet::device, TestSet::counter, TestSet::samples, Drive_Device);
 }
