@@ -303,7 +303,7 @@ Debuggen durh die Applikation:
 <br>
 <br>
 
-## 3. Unit-Test
+## 4. Unit-Test
 
 *Am Ende steht die Abhame, der Elektromeister prüft die Isolationswiderstände, der Bauleiter das gesamte Haus.*
 *Der Softwerker seine Arbeit durch Unit-Tests. Leider sind gerade alle noch beschäftigt.* :unamused:
@@ -311,7 +311,7 @@ Debuggen durh die Applikation:
 <br>
 <br>
 
-## 3. Fazit und Ausblick
+## 5. Fazit und Ausblick
 
 Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
 Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
