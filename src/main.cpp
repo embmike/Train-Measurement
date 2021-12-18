@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include "device.hpp"
 
 //Erstelle Device und lege Parameter fest
