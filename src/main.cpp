@@ -24,21 +24,21 @@ void for_each_sample(Device& dev, uint32_t& counter, const uint32_t size, std::f
 
 int main(int, char**)
 {
-    // Initialisiere das Gerät
+    // 0 - Initialisiere das Gerät
     Initialize_Device(TestSet::device, TestSet::speed_mean, TestSet::speed_stddev, TestSet::dt);
 
-    // Fahre mit dem Gerät
+    // 1 - Fahre mit dem Gerät
     auto Drive_Device = [](Device& device){
-        // Messen die Geschwindigkeit
+        // 1.1. - Messen die Geschwindigkeit
         Measure_Velocity(device);
 
-        // Filtere die Geschwindigkeit
+        // 1.2. - Filtere die Geschwindigkeit
         Filter_Velocity(device);
 
-        // Brechne den Weg
+        // 1.3. - Brechne den Weg
         Calculate_Position(device);
 
-        // Plotte ein Weg-Zeit-Deiagramm
+        // 1.4. - lotte ein Weg-Zeit-Deiagramm
         Plot(device);
     };
 

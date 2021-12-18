@@ -33,28 +33,46 @@ Schreibe den Ablauf des Blockschaltbilds als Kommentar auf. Erweitere um Initial
 
 Datei main.cpp:
 ```C++
-// ....
-int main(int, char**)
+//...
+//Erstelle Device und lege Parameter fest
+namespace TestSet
 {
-    // Erstelle Device und lege Parameter fest
     Device device;
+    constexpr double speed_mean { 80.0 };  // m/s
+    constexpr double speed_stddev { 8.0 }; // m/s
     constexpr double dt { 0.1 };    // 100ms
     constexpr double time { 10.0 }; // 10s
     constexpr uint32_t samples { static_cast<uint32_t>(time / dt) };
+    uint32_t counter { 0 };
+}
 
-    // Initialisiere das Gerät
+// Berechne alle für jeden Abtastwert
+void for_each_sample(Device& dev, uint32_t& counter, const uint32_t size, std::function<void(Device& device)> drive)
+{
+    for(; counter < size; counter++)
+    {
+        drive(dev);
+    }
+}
+
+int main(int, char**)
+{
+    // 0 - Initialisiere das Gerät
 
     // Fahre mit dem Gerät
-    for(uint32_t counter = 0; counter < samples; counter++)
-    {
-        // Messen die Geschwindigkeit
+    auto Drive_Device = [](Device& device){
 
-        // Filtere die Geschwindigkeit
+        // 1 - Messen die Geschwindigkeit
 
-        // Brechne den Weg
+        // 2 - Filtere die Geschwindigkeit
 
-        // Plotte ein Weg-Zeit-Deiagramm
+        // 3 - Brechne den Weg
+
+        // 4 - Plotte ein Weg-Zeit-Deiagramm
 	}
+
+    // Endlich fahren
+    for_each_sample(TestSet::device, TestSet::counter, TestSet::samples, Drive_Device);
 }
 // ...
 ```
@@ -161,33 +179,26 @@ Datei main.cpp:
 // ....
 int main(int, char**)
 {
-    // Erstelle Device und lege Parameter fest
-    Device device;
-	constexpr double speed_mean { 80.0 };  // m/s
-    constexpr double speed_stddev { 8.0 }; // m/s
-    constexpr double dt { 0.1 };    // 100ms
-    constexpr double time { 10.0 }; // 10s
-    constexpr uint32_t samples { static_cast<uint32_t>(time / dt) };
+    // 0 - Initialisiere das Gerät
+    Initialize_Device(TestSet::device, TestSet::speed_mean, TestSet::speed_stddev, TestSet::dt);
 
-    // Initialisiere das Gerät
-	Initialize_Device(device, speed_mean, speed_stddev, dt);
+    // 1 - Fahre mit dem Gerät
+    auto Drive_Device = [](Device& device){
+        // 1.1 - Messen die Geschwindigkeit
+        Measure_Velocity(device);
 
-    // Fahre mit dem Gerät
-    for(uint32_t counter = 0; counter < samples; counter++)
-    {
-        // Messen die Geschwindigkeit
-		Measure_Velocity(device);
+        // 1.2 - Filtere die Geschwindigkeit
+        Filter_Velocity(device);
 
-        // Filtere die Geschwindigkeit
-		Filter_Velocity(device);
+        // 1.3. - Brechne den Weg
+        Calculate_Position(device);
 
-        // Brechne den Weg
-		Calculate_Position(device);
+        // 1.4 - Plotte ein Weg-Zeit-Deiagramm
+        Plot(device);
+    };
 
-        // Plotte ein Weg-Zeit-Deiagramm
-		Plot(device);
-
-        counter++;
+    // Endlich fahren
+    for_each_sample(TestSet::device, TestSet::counter, TestSet::samples, Drive_Device);
 }
 // ...
 ```
