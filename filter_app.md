@@ -263,16 +263,15 @@ Datei device.cpp:
 ```C++
 // ...
 
-double Filter_Velocity(Device& dev)
+double Device::Filter_Velocity()
 {
-    dev.state = DeviceState::FILTERED;
-
     // Gleitender Mittelwertfilter
-    std::rotate(dev.filterValues.rbegin(), dev.filterValues.rbegin() + 1, dev.filterValues.rend());
-    dev.filterValues.at(0) = dev.measurement;
-    dev.filterValue = std::accumulate(dev.filterValues.begin(), dev.filterValues.end(), 0) / dev.filterValues.size();
+    std::rotate(filterValues.rbegin(), filterValues.rbegin() + 1, filterValues.rend());
+    filterValues.at(0) = measurement;
+    velocity = std::accumulate(filterValues.begin(), filterValues.end(), 0) / filterValues.size();
 
-    return dev.filterValue;
+    state = DeviceState::FILTERED;    state = DeviceState::FILTERED;
+    return velocity;
 }
 
 // ...
