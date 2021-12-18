@@ -1,5 +1,4 @@
 #include <iostream>
-#include <array>
 #include "device.hpp"
 
 //Erstelle Device und lege Parameter fest
@@ -11,8 +10,17 @@ namespace TestSet
     constexpr double dt { 0.1 };    // 100ms
     constexpr double time { 10.0 }; // 10s
     constexpr uint32_t samples { static_cast<uint32_t>(time / dt) };
+    uint32_t counter { 0 };
 }
 
+// Berechne alle für jeden Abtastwert
+void for_each_sample(uint32_t& counter, const uint32_t size, std::function<void(void)> drive)
+{
+    for(; counter < size; counter++)
+    {
+        drive();
+    }
+}
 
 int main(int, char**)
 {
@@ -20,8 +28,7 @@ int main(int, char**)
     Initialize_Device(TestSet::device, TestSet::speed_mean, TestSet::speed_stddev, TestSet::dt);
 
     // Fahre mit dem Gerät
-    for(uint32_t counter = 0; counter < TestSet::samples; counter++)
-    {
+    auto Drive_Device = [](){
         // Messen die Geschwindigkeit
         Measure_Velocity(TestSet::device);
 
@@ -33,5 +40,7 @@ int main(int, char**)
 
         // Plotte ein Weg-Zeit-Deiagramm
         Plot(TestSet::device);
-    }
+    };
+
+    for_each_sample(TestSet::counter, TestSet::samples, Drive_Device);
 }
