@@ -13,10 +13,10 @@
 ## 2. Entwicklungsschritte
 
 Entwicklungsschritte sind:
--	2.1. Formuliere die Idee mit einem Blockschaltbild (BSB)
+-	2.1. Formuliere die Idee mittels Blockschaltbild (BSB)
 -	2.2. Erstelle ein C++-Projekt in Visual Studio Code
 -	2.3. Schreibe die einzelnen [Arbeitsschritte](#link3) des BSD auf
--   2.4. Deklariere die [Schnittstelle](#link4) und inkludiere sie
+-   2.4. Deklariere die [Schnittstelle](#link4)
 -   2.5. Definiere die [Funktionsrümpfe](#link5) und rufe die Schnittstelle auf
 -   2.6. Definiere alle [Funktionen](#link6)
 -   2.7. Definiere zu jeder Funktion ein Unit-Test
@@ -27,9 +27,9 @@ Entwicklungsschritte sind:
 
 ### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSD auf</span>
 
-*Wie bei einem Hausbau zeichnet zuerst eine Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
+*Wie bei einem Hausbau zeichnet zuerst ein Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
 
-Schreibe den Ablauf des Blockschaltbilds als Kommentar auf:
+Schreibe den Ablauf des Blockschaltbilds in kommentarform auf:
 -   Definere das Testset. 
     -   Ein Zug fährt mit konstanter Geschwindigkeit.
     -   Ein Messgerät misst die Geschwindigkeit und ermittelt daraus die aktuelle Position. 
@@ -81,9 +81,9 @@ int main(int, char**)
 
 <br>
 
-### <span id="link4">2.4. Deklare die Schnittstelle und inkludiere sie</span>
+### <span id="link4">2.4. Deklare die Schnittstelle</span>
 
-*Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnistelle als Funktionen.*
+*Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnistelle durch Funktionen.*
 
 Datei functional_iter.hpp:
 
@@ -146,10 +146,10 @@ private:
 
 ### <span id="link5">2.5. Definiere die Funktionsrümpfe und rufe die Schnittstelle auf</span>
 
-*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen als Funktionsrümpfe.*
+*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.*
 *Jede Funktion setzt einen Zusatand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
 
-*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstellen mittels der Zustaände im Debugger*
+*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstelle mittels der Zustände im Debugger*
 
 Datei device.cpp:
 
@@ -293,8 +293,8 @@ double Device::Filter_Velocity()
 
 ## 3. Debuggen
 
-*Jedes Gewerk prüft seine Einrichtungen, der Elektriker prüft seie Schaltungen, der Softwerker seine Funktionen*
-*Deutsches Handwerk kommt von können, nicht von schauen wir mal* :satisfied:
+*Jedes Gewerk prüft seine Einrichtungen, der Elektriker prüft seine Schaltungen, der Softwerker seine Funktionen*
+*Deutsches Handwerk kommt von können, nicht von schauen wir mal, basteln wir uns ein Haus* :satisfied:
 
 Debuggen durh die Applikation:
 
