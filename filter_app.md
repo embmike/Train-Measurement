@@ -239,6 +239,6 @@ Debuggen durh die Applikation:
 
 <br>
 
-![Debug-Image](./images/debug_view.PNG)
+![Debug-Image](./images/debug_view2.PNG)
 
 <br>
