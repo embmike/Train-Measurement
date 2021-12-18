@@ -27,6 +27,8 @@ Entwicklungsschritte sind:
 
 ### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSD auf</span>
 
+*Wie bei einem Hausbau zeichnet zuerst eine Architekt das Haus. Der Softwerker pinselt ein Blockschaltbild seiner Idee.*
+
 Schreibe den Ablauf des Blockschaltbilds als Kommentar auf:
 -   Definere das Testset. 
     -   Ein Zug fährt mit konstanter Geschwindigkeit.
@@ -34,6 +36,7 @@ Schreibe den Ablauf des Blockschaltbilds als Kommentar auf:
 -   Die Messung soll 10s mit einer Auflösung von 100ms dauern.
 -   Für die Iteration der Abtaswerte soll die "for_each_iter"-Funktion verwendet werden.
     -   Ach, die existiert noch garnicht. Kommt später. :smiley:
+
 
 Datei main.cpp:
 ```C++
@@ -79,6 +82,8 @@ int main(int, char**)
 <br>
 
 ### <span id="link4">2.4. Deklare die Schnittstelle und inkludiere sie</span>
+
+*Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnistelle als Funktionen.*
 
 Datei functional_iter.hpp:
 
@@ -141,14 +146,17 @@ private:
 
 ### <span id="link5">2.5. Definiere die Funktionsrümpfe und rufe die Schnittstelle auf</span>
 
-Die Zustände sind fürs Debuggen da, um den Kontrollfluss zu prüfen.
+*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen als Funktionsrümpfe.*
+*Jede Funktion setzt einen Zusatand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
+
+*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstellen mittels der Zustaände im Debugger*
 
 Datei device.cpp:
 
 ```C++
 // ...
 
-Device::Device( Device& dev, double speed_mean, double speed_stddev, double dt)
+Device::Device(double speed_mean, double speed_stddev, double dt)
 {
     dev.state = DeviceState::INITILIZED;
 }
@@ -238,7 +246,10 @@ int main(int, char**)
 
 ### <span id="link6">2.6. Definiere alle Funktionen</span>
 
-Die Implementierung soll in kompakter funktionsorientierter Form erfolgen, für Schleifen sind Funktionen zu wählen - siehe Beispiele.
+*Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Rohrleger verlegt die Fussbodenheizung, der Elektriker die Kabel. 
+Analog impementiert der Softwerker seine Funktionen*
+
+Die Implementierung erfolt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele.
 
 Datei functional_iter.cpp
 
@@ -282,9 +293,20 @@ double Device::Filter_Velocity()
 
 ## 3. Debuggen
 
+*Jedes Gewerk prüft seine Einrichtungen, der Elektriker prüft seie Schaltungen, der Softwerker seine Funktionen*
+*Deutsches Handwerk kommt von können, nicht von schauen wir mal* :satisfied:
+
 Debuggen durh die Applikation:
 
 ![Debug-Image](./images/debug_view3.PNG)
+
+<br>
+<br>
+
+## 3. Unit-Test
+
+*Am Ende steht die Abhame, der Elektromeister prüft die Isolationswiderstände, der Bauleiter das gesamte Haus.*
+*Der Softwerker seine Arbeit durch Unit-Tests. Leider sind gerade alle noch beschäftigt.* :unamused:
 
 <br>
 <br>
