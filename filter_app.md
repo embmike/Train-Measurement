@@ -4,7 +4,8 @@
 
 <br>
 
-![Blockschaltbild](./images/v_s_bsb.PNG)
+<!-- ![Blockschaltbild](./images/v_s_bsb.PNG) -->
+<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />  
 
 <br>
 <br>
