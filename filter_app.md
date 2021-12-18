@@ -27,53 +27,52 @@ Entwicklungsschritte sind:
 
 ### <span id="link3">2.3. Schreibe die einzelnen Arbeitsschritte des BSD auf</span>
 
-Schreibe den Ablauf des Blockschaltbilds als Kommentar auf. Erweitere um Initialisierung und eine Schleife für die Zyklen.
-
-<br>
+Schreibe den Ablauf des Blockschaltbilds als Kommentar auf:
+-   Definere das Testset. 
+    -   Ein Zug fährt mit konstanter Geschwindigkeit.
+    -   Ein Messgerät misst die Geschwindigkeit und ermittelt daraus die aktuelle Position. 
+-   Die Messung soll 10s mit einer Auflösung von 100ms dauern.
+-   Für die Iteration der Abtaswerte soll die "for_each_iter"-Funktion verwendet werden.
+    -   Ach, die existiert noch garnicht. Kommt später. :smiley:
 
 Datei main.cpp:
 ```C++
 //...
+
 //Erstelle Device und lege Parameter fest
 namespace TestSet
 {
-    Device device;
+    // Testgerät
     constexpr double speed_mean { 80.0 };  // m/s
     constexpr double speed_stddev { 8.0 }; // m/s
     constexpr double dt { 0.1 };    // 100ms
+    // the device object
+    
+    // Testlauf
     constexpr double time { 10.0 }; // 10s
-    constexpr uint32_t samples { static_cast<uint32_t>(time / dt) };
-    uint32_t counter { 0 };
-}
-
-// Berechne alle für jeden Abtastwert
-void for_each_sample(Device& dev, uint32_t& counter, const uint32_t size, std::function<void(Device& device)> drive)
-{
-    for(; counter < size; counter++)
-    {
-        drive(dev);
-    }
+    constexpr std::size_t samples { static_cast<uint32_t>(time / dt) };
+    std::size_t counter { 0 };
 }
 
 int main(int, char**)
 {
-    // 0 - Initialisiere das Gerät
+    // The device is a train - the Maglev
 
-    // Fahre mit dem Gerät
-    auto Drive_Device = [](Device& device){
+    // 1 - Gruppiere Fahren mit dem Zug zu einer Lambda-Funktion
+    auto Drive_Train = [](std::size_t& iter){
+        // 1.1. - Messen die Geschwindigkeit
 
-        // 1 - Messen die Geschwindigkeit
+        // 1.2. - Filtere die Geschwindigkeit
 
-        // 2 - Filtere die Geschwindigkeit
+        // 1.3. - Brechne den Weg
 
-        // 3 - Brechne den Weg
-
-        // 4 - Plotte ein Weg-Zeit-Deiagramm
-	}
+        // 1.4. - Plotte ein Weg-Zeit-Deiagramm
+    };
 
     // Endlich fahren
-    for_each_sample(TestSet::device, TestSet::counter, TestSet::samples, Drive_Device);
+    for_each_iter(TestSet::counter, TestSet::samples, Drive_Train);
 }
+
 // ...
 ```
 
@@ -81,43 +80,59 @@ int main(int, char**)
 
 ### <span id="link4">2.4. Deklare die Schnittstelle und inkludiere sie</span>
 
+Datei functional_iter.hpp:
+
+```C++
+// ...
+
+// Berechne über für jede Iteration
+void for_each_iter(std::size_t& iter, const size_t size, std::function<void(void)> fn);
+void for_each_iter(std::size_t& iter, const size_t size, std::function<void(std::size_t&)> fn);
+
+// ...
+```
 <br>
 
 Datei device.hpp:
 
 ```C++
 // ...
-using filter_array = std::array<double,10>;
 
-enum struct DeviceState
+class Device final
 {
-    UNDEFINED,
-    INITILIZED,
-    MEASURED,
-    FILTERED,
-    CALCULATED,
-    PLOTTED
-};
+public:
+    using filter_array = std::array<double,10>;
 
-struct Device
-{
+    enum struct DeviceState
+    {
+        UNDEFINED,
+        INITILIZED,
+        MEASURED,
+        FILTERED,
+        CALCULATED,
+        PLOTTED
+    };
+
+    // Initialisiere das Gerät
+    Device(double speed_mean, double speed_stddev, double dt);
+
+    // Messen die Geschwindigkeit
+    double Measure_Velocity();
+
+    // Filtere die Geschwindigkeit
+    double Filter_Velocity();
+
+    // Brechne den Weg
+    double Calculate_Position();
+
+    // Plotte ein Weg-Zeit-Deiagramm
+    void Plot(std::size_t& iter);
+
+private:
+    Device() = delete;
+
     DeviceState state { DeviceState::UNDEFINED };
 };
-
-// Initialisiere das Gerät
-void Initialize_Device(Device&, double speed_mean, double speed_stddev, double dt);
-
-// Messen die Geschwindigkeit
-double Measure_Velocity(Device&);
-
-// Filtere die Geschwindigkeit
-double Filter_Velocity(Device&);
-
-// Brechne den Weg
-double Calculate_Position(Device&);
-
-// Plotte ein Weg-Zeit-Deiagramm
-void Plot(Device&);
 
 // ....
 ```
@@ -128,47 +143,46 @@ void Plot(Device&);
 
 Die Zustände sind fürs Debuggen da, um den Kontrollfluss zu prüfen.
 
-<br>
-
 Datei device.cpp:
 
 ```C++
 // ...
-void Initialize_Device( Device& dev, double speed_mean, double speed_stddev, double dt)
+
+Device::Device( Device& dev, double speed_mean, double speed_stddev, double dt)
 {
     dev.state = DeviceState::INITILIZED;
 }
 
 
-double Measure_Velocity(Device& dev)
+double Device::Measure_Velocity()
 {
-    dev.state = DeviceState::MEASURED;
+    state = DeviceState::MEASURED;
 
     return 1.0;
 }
 
 
-double Filter_Velocity(Device& dev)
+double Device::Filter_Velocity()
 {
-    dev.state = DeviceState::FILTERED;
+    state = DeviceState::FILTERED;
 
     return 2.0;
 }
 
 
-double Calculate_Position(Device& dev)
+double Device::Calculate_Position()
 {
-    dev.state = DeviceState::CALCULATED;
+    state = DeviceState::CALCULATED;
 
     return 3.0;
 }
 
 
-void Plot(Device& dev)
+void Device::Plot()
 {
-    dev.state = DeviceState::PLOTTED;
-
+    state = DeviceState::PLOTTED;
 }
+
 // ....
 ```
 <br>
@@ -177,36 +191,70 @@ Datei main.cpp:
 
 ```C++
 // ....
+
+//Erstelle Device und lege Parameter fest
+namespace TestSet
+{
+    // Testgerät
+    constexpr double speed_mean { 80.0 };  // m/s
+    constexpr double speed_stddev { 8.0 }; // m/s
+    constexpr double dt { 0.1 };    // 100ms
+    Device device {speed_mean, speed_stddev, dt};
+    
+    // Testlauf
+    constexpr double time { 10.0 }; // 10s
+    constexpr std::size_t samples { static_cast<uint32_t>(time / dt) };
+    std::size_t counter { 0 };
+}
+
+
 int main(int, char**)
 {
-    // 0 - Initialisiere das Gerät
-    Initialize_Device(TestSet::device, TestSet::speed_mean, TestSet::speed_stddev, TestSet::dt);
+    // The device is a train - the Maglev
+    [[maybe_unused]] Device& train { TestSet::device };
 
-    // 1 - Fahre mit dem Gerät
-    auto Drive_Device = [](Device& device){
-        // 1.1 - Messen die Geschwindigkeit
-        Measure_Velocity(device);
+    // 1 - Gruppiere Fahren mit dem Zug zu einer Lambda-Funktion
+    auto Drive_Train = [&train](std::size_t& iter){
+        // 1.1. - Messen die Geschwindigkeit
+        train.Measure_Velocity();
 
-        // 1.2 - Filtere die Geschwindigkeit
-        Filter_Velocity(device);
+        // 1.2. - Filtere die Geschwindigkeit
+        train.Filter_Velocity();
 
         // 1.3. - Brechne den Weg
-        Calculate_Position(device);
+        train.Calculate_Position();
 
-        // 1.4 - Plotte ein Weg-Zeit-Deiagramm
-        Plot(device);
+        // 1.4. - Plotte ein Weg-Zeit-Deiagramm
+        train.Plot(iter);
     };
 
     // Endlich fahren
-    for_each_sample(TestSet::device, TestSet::counter, TestSet::samples, Drive_Device);
+    for_each_iter(TestSet::counter, TestSet::samples, Drive_Train);
 }
+
 // ...
 ```
 <br>
 
 ### <span id="link6">2.6. Definiere alle Funktionen</span>
 
-Die Implementierung soll in kompakter funktionsorientierter Form erfolgen, für Schleifen sind Funktionen zu wählen - siehe Beispiel.
+Die Implementierung soll in kompakter funktionsorientierter Form erfolgen, für Schleifen sind Funktionen zu wählen - siehe Beispiele.
+
+Datei functional_iter.cpp
+
+```C++
+// ...
+
+void for_each_iter(std::size_t& iter, const size_t size, std::function<void(std::size_t&)> fn)
+{
+    for(; iter < size; iter++)
+    {
+        fn(iter);
+    }   
+}
+
+// ..
+```
 
 <br>
 
@@ -214,6 +262,7 @@ Datei device.cpp:
 
 ```C++
 // ...
+
 double Filter_Velocity(Device& dev)
 {
     dev.state = DeviceState::FILTERED;
@@ -225,6 +274,7 @@ double Filter_Velocity(Device& dev)
 
     return dev.filterValue;
 }
+
 // ...
 ```
 
@@ -233,12 +283,21 @@ double Filter_Velocity(Device& dev)
 
 ## 3. Debuggen
 
-<br>
-
 Debuggen durh die Applikation:
 
+![Debug-Image](./images/debug_view3.PNG)
+
+<br>
 <br>
 
-![Debug-Image](./images/debug_view2.PNG)
+## 3. Fazit und Ausblick
+
+Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
+Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
+
+**Offene Punkte**
+-   Unit-Test
+-   Messdaten in eine datei speichen
+-   Messdaten mittels Python visualisieren
 
 <br>

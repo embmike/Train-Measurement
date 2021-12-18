@@ -1,62 +1,61 @@
 #include "device.hpp"
 #include <iostream>
+#include <iomanip>
 
 
-void Initialize_Device( Device& dev, double speed_mean, double speed_stddev, double dt)
+Device::Device(double speed_mean, double speed_stddev, double dt)
 {
-    dev.state = DeviceState::INITILIZED;
-
     // Zufallsgenerator für die Geschwindigkeitsmessung
     std::random_device rd {};
-	dev.generator = std::mt19937 {rd()};
-	dev.distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
+	generator = std::mt19937 {rd()};
+	distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
 
     // Initialisiere Filter mit dem Mittelwert
-    std::for_each(dev.filterValues.begin(), dev.filterValues.end(), [&speed_mean](double& d){d = speed_mean;});
+    std::for_each(filterValues.begin(), filterValues.end(), [&speed_mean](double& d){d = speed_mean;});
 
     // Abtastrate
-    dev.dt = dt;
+    dt = dt;
+
+    state = DeviceState::INITILIZED;
 }
 
 
-double Measure_Velocity(Device& dev)
+double Device::Measure_Velocity()
 {
-    dev.state = DeviceState::MEASURED;
+    measurement = distribution(generator);
 
-    dev.measurement = dev.distribution(dev.generator);
-
-    return dev.measurement;
+    state = DeviceState::MEASURED;
+    return measurement;
 }
 
 
-double Filter_Velocity(Device& dev)
+double Device::Filter_Velocity()
 {
-    dev.state = DeviceState::FILTERED;
-
     // Gleitender Mittelwertfilter
-    std::rotate(dev.filterValues.rbegin(), dev.filterValues.rbegin() + 1, dev.filterValues.rend());
-    dev.filterValues.at(0) = dev.measurement;
-    dev.filterValue = std::accumulate(dev.filterValues.begin(), dev.filterValues.end(), 0) / dev.filterValues.size();
+    std::rotate(filterValues.rbegin(), filterValues.rbegin() + 1, filterValues.rend());
+    filterValues.at(0) = measurement;
+    velocity = std::accumulate(filterValues.begin(), filterValues.end(), 0) / filterValues.size();
 
-    return dev.filterValue;
+    state = DeviceState::FILTERED;    state = DeviceState::FILTERED;
+    return velocity;
 }
 
 
-double Calculate_Position(Device& dev)
+double Device::Calculate_Position()
 {
-    dev.state = DeviceState::CALCULATED;
+    position += velocity * dt;
 
-    dev.position += dev.filterValue * dev.dt;
-
-    return dev.position;
+    state = DeviceState::CALCULATED;
+    return position;
 }
 
 
-void Plot(Device& dev)
+void Device::Plot(std::size_t& iter)
 {
-    dev.state = DeviceState::PLOTTED;
-
-    std::cout << "v=" << dev.filterValue << " m/s"
+    std::cout << std::setprecision(1) << std::fixed << iter * dt << " s: "
+              << "v=" << velocity << " m/s"
               << " / " 
-              << "s=" << dev.position << " m\n";
+              << "s=" << std::setw(5) << std::setfill(' ') << position<< " m\n";
+
+    state = DeviceState::PLOTTED;
 }

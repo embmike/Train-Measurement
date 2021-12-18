@@ -9,6 +9,7 @@ enable_testing()
 add_executable(${PROJECT_NAME} 
     src/main.cpp
     src/device.cpp
+    src/functional_iter.cpp
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
