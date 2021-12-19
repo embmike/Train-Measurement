@@ -57,23 +57,21 @@ namespace TestSet
     std::size_t counter { 0 };
 }
 
+void Monitor_TrainDrive(std::size_t& iter)
+{
+    // 1.1. - Messen die Geschwindigkeit
+
+    // 1.2. - Filtere die Geschwindigkeit
+
+    // 1.3. - Brechne den Weg
+
+    // 1.4. - Plotte ein Weg-Zeit-Übersicht
+}
+
 int main(int, char**)
 {
-    // The device is a train - the Maglev
-
-    // 1 - Gruppiere Fahren mit dem Zug zu einer Lambda-Funktion
-    auto Drive_Train = [](std::size_t& iter){
-        // 1.1. - Messen die Geschwindigkeit
-
-        // 1.2. - Filtere die Geschwindigkeit
-
-        // 1.3. - Brechne den Weg
-
-        // 1.4. - Plotte ein Weg-Zeit-Deiagramm
-    };
-
-    // Endlich fahren
-    for_each_iter(TestSet::counter, TestSet::samples, Drive_Train);
+    // Der Zug, Shinkansen fährt konstant mit einer mittleren Geschwindigkeit von 80m/s.
+    // Das Monitorgerät soll aus der Geschwindigkeit die aktuelle Position berechnen und anzeigen.
 }
 
 // ...
@@ -200,6 +198,8 @@ Datei main.cpp:
 ```C++
 // ....
 
+#define Drive_Train for_each_iter
+
 //Erstelle Device und lege Parameter fest
 namespace TestSet
 {
@@ -216,28 +216,29 @@ namespace TestSet
 }
 
 
+void Monitor_TrainDrive(std::size_t& iter)
+{
+    // Der Zug
+    Device& train { TestSet::device };
+
+    // 1.1. - Messen die Geschwindigkeit
+    train.Measure_Velocity();
+
+    // 1.2. - Filtere die Geschwindigkeit
+    train.Filter_Velocity();
+
+    // 1.3. - Brechne den Weg
+    train.Calculate_Position();
+
+    // 1.4. - Plotte ein Weg-Zeit-Übersicht
+    train.Plot(iter);
+}
+
 int main(int, char**)
 {
-    // The device is a train - the Maglev
-    [[maybe_unused]] Device& train { TestSet::device };
-
-    // 1 - Gruppiere Fahren mit dem Zug zu einer Lambda-Funktion
-    auto Drive_Train = [&train](std::size_t& iter){
-        // 1.1. - Messen die Geschwindigkeit
-        train.Measure_Velocity();
-
-        // 1.2. - Filtere die Geschwindigkeit
-        train.Filter_Velocity();
-
-        // 1.3. - Brechne den Weg
-        train.Calculate_Position();
-
-        // 1.4. - Plotte ein Weg-Zeit-Deiagramm
-        train.Plot(iter);
-    };
-
-    // Endlich fahren
-    for_each_iter(TestSet::counter, TestSet::samples, Drive_Train);
+    // Der Zug, Shinkansen fährt konstant mit einer mittleren Geschwindigkeit von 80m/s.
+    // Das Monitorgerät soll aus der Geschwindigkeit die aktuelle Position berechnen und anzeigen.
+    Drive_Train(TestSet::counter, TestSet::samples, Monitor_TrainDrive);
 }
 
 // ...
@@ -298,7 +299,7 @@ double Device::Filter_Velocity()
 
 Debuggen durh die Applikation:
 
-![Debug-Image](./images/debug_view3.PNG)
+![Debug-Image](./images/debug_view4.PNG)
 
 <br>
 <br>

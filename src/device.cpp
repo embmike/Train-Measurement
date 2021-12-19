@@ -36,7 +36,7 @@ double Device::Filter_Velocity()
     filterValues.at(0) = measurement;
     velocity = std::accumulate(filterValues.begin(), filterValues.end(), 0) / filterValues.size();
 
-    state = DeviceState::FILTERED;    state = DeviceState::FILTERED;
+    state = DeviceState::FILTERED;
     return velocity;
 }
 

@@ -1,5 +1,6 @@
 #include "functional_iter.hpp"
 
+
 void for_each_iter(std::size_t& iter, const size_t size, std::function<void(void)> fn)
 {
     for(; iter < size; iter++)
