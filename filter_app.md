@@ -312,7 +312,17 @@ Debuggen durh die Applikation:
 <br>
 <br>
 
-## 5. Fazit und Ausblick
+## 5. Versionsmanagement mit Git
+
+Git hilft einem bei der schrittweisen Entwicklung. Jeder Entwicklungsschritt wird gesichert. Später ermöglicht es einem,
+die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichetr auf einem früheren Entwicklungschritte zrückwechseln.
+
+![Debug-Image](./images/git_view.PNG)
+
+<br>
+<br>
+
+## 6. Fazit und Ausblick
 
 Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
 Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
