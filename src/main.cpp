@@ -37,6 +37,7 @@ void Monitor_TrainDrive(std::size_t& iter)
     train.Plot(iter);
 }
 
+
 int main(int, char**)
 {
     // Der Zug, Shinkansen fährt konstant mit einer mittleren Geschwindigkeit von 80m/s.

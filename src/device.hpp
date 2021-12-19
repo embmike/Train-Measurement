@@ -11,6 +11,8 @@ class Device final
 {
 public:
     using filter_array = std::array<double,10>;
+    using pose_array = std::array<double,2>;
+    using system_matrix = std::array<std::array<double,2>,2>;
 
     enum struct DeviceState
     {
@@ -54,6 +56,18 @@ private:
     // Berechnung der Position
     double dt { 0.1 };
     double position { 0.0 };
+
+    // Systemgleichung: x(k+1) = A * x(k)
+    system_matrix system_A {{ 
+        {0.0,0.0}, 
+        {0.0,0.0} 
+    }};
+
+    // Zustandsvektor x = (Position, Geschwindigkeit)
+    pose_array pose_x { 
+        0.0, 
+        0.0
+    };
 };
 
 

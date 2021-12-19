@@ -250,7 +250,7 @@ int main(int, char**)
 *Beim Innausbau erstellt jedes Gewerk seine Einrichungen, der Rohrleger verlegt die Fussbodenheizung, der Elektriker die Kabel. 
 Analog impementiert der Softwerker seine Funktionen*
 
-Die Implementierung erfolt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele.
+Die Implementierung erfolt in kompakter funktionsorientierter Form, für Schleifen werden Funktionen gewählt - siehe Beispiele:
 
 Datei functional_iter.cpp
 
@@ -270,7 +270,7 @@ void for_each_iter(std::size_t& iter, const size_t size, std::function<void(std:
 
 <br>
 
-Datei device.cpp:
+Datei device.cpp
 
 ```C++
 // ...
@@ -284,6 +284,34 @@ double Device::Filter_Velocity()
 
     state = DeviceState::FILTERED;    state = DeviceState::FILTERED;
     return velocity;
+}
+
+<br>
+
+// ...
+```
+
+Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
+
+![Blockschaltbild](./images/system_equation.png)
+
+```C++
+// ...
+
+double Device::Calculate_Position()
+{
+    /*
+     * Berechne die neue Position x(k+1) = A * x(k)
+     * 1: Aktualisiere Geschwindigkeit
+     * 2: Berechne die neuen Zustandsvariablen
+     * 3: Extrahiere die neue Position
+     */
+    pose_x.at(1) = velocity;
+    pose_x = mvmul(system_A, pose_x);
+    position = pose_x[0];
+
+    state = DeviceState::CALCULATED;
+    return position;
 }
 
 // ...

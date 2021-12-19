@@ -1,4 +1,5 @@
 #include "device.hpp"
+#include "matrix.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -15,6 +16,18 @@ Device::Device(double speed_mean, double speed_stddev, double dt)
 
     // Abtastrate
     dt = dt;
+
+    // Systemnarix A
+    system_A = {{
+        {1.0,  dt},
+        {0.0, 1.0}
+    }};
+
+    // Initialisiere Zustandsvektor x = (position, velocity)
+    pose_x = {
+        0.0,
+        speed_mean
+    };
 
     state = DeviceState::INITILIZED;
 }
@@ -43,7 +56,15 @@ double Device::Filter_Velocity()
 
 double Device::Calculate_Position()
 {
-    position += velocity * dt;
+    /*
+     * Berechne die neue Position x(k+1) = A * x(k)
+     * 1: Aktualisiere Geschwindigkeit
+     * 2: Berechne die neuen Zustandsvariablen
+     * 3: Extrahiere die neue Position
+     */
+    pose_x.at(1) = velocity;
+    pose_x = mvmul(system_A, pose_x);
+    position = pose_x[0];
 
     state = DeviceState::CALCULATED;
     return position;
