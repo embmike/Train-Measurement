@@ -134,7 +134,7 @@ public:
 private:
     Device() = delete;
 
-    DeviceState state { DeviceState::UNDEFINED };
+    DeviceState _state { DeviceState::UNDEFINED };
 };
 
 // ....
@@ -156,13 +156,13 @@ Datei device.cpp:
 
 Device::Device(double speed_mean, double speed_stddev, double dt)
 {
-    dev.state = DeviceState::INITILIZED;
+    _state = DeviceState::INITILIZED;
 }
 
 
 double Device::Measure_Velocity()
 {
-    state = DeviceState::MEASURED;
+    _state = DeviceState::MEASURED;
 
     return 1.0;
 }
@@ -170,7 +170,7 @@ double Device::Measure_Velocity()
 
 double Device::Filter_Velocity()
 {
-    state = DeviceState::FILTERED;
+    _state = DeviceState::FILTERED;
 
     return 2.0;
 }
@@ -178,7 +178,7 @@ double Device::Filter_Velocity()
 
 double Device::Calculate_Position()
 {
-    state = DeviceState::CALCULATED;
+    _state = DeviceState::CALCULATED;
 
     return 3.0;
 }
@@ -186,7 +186,7 @@ double Device::Calculate_Position()
 
 void Device::Plot()
 {
-    state = DeviceState::PLOTTED;
+    _state = DeviceState::PLOTTED;
 }
 
 // ....
@@ -278,12 +278,12 @@ Datei device.cpp
 double Device::Filter_Velocity()
 {
     // Gleitender Mittelwertfilter
-    std::rotate(filterValues.rbegin(), filterValues.rbegin() + 1, filterValues.rend());
-    filterValues.at(0) = measurement;
-    velocity = std::accumulate(filterValues.begin(), filterValues.end(), 0) / filterValues.size();
+    std::rotate(_filterValues.rbegin(), _filterValues.rbegin() + 1, _filterValues.rend());
+    _filterValues.at(0) = _measurement;
+    Set_Velocity(std::accumulate(_filterValues.begin(), _filterValues.end(), 0) / _filterValues.size());
 
-    state = DeviceState::FILTERED;    state = DeviceState::FILTERED;
-    return velocity;
+    _state = DeviceState::FILTERED;
+    return Get_Velocity();
 }
 
 <br>
@@ -300,18 +300,11 @@ Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
 
 double Device::Calculate_Position()
 {
-    /*
-     * Berechne die neue Position x(k+1) = A * x(k)
-     * 1: Aktualisiere Geschwindigkeit
-     * 2: Berechne die neuen Zustandsvariablen
-     * 3: Extrahiere die neue Position
-     */
-    pose_x.at(1) = velocity;
-    pose_x = mvmul(system_A, pose_x);
-    position = pose_x[0];
+    // Berechne die neue Position x(k+1) = A * x(k)
+    _pose_x = mvmul(_system_A, _pose_x);
 
-    state = DeviceState::CALCULATED;
-    return position;
+    _state = DeviceState::CALCULATED;
+    return Get_Position();
 }
 
 // ...
