@@ -4,15 +4,15 @@
 #include <iomanip>
 
 
-Device::Device(double speed_mean, double speed_stddev, double dt)
+Device::Device(double vel_mean, double vel_stddev, double dt)
 {
     // Zufallsgenerator für die Geschwindigkeitsmessung
     std::random_device rd {};
 	_generator = std::mt19937 {rd()};
-	_distribution = std::normal_distribution<double> {speed_mean, speed_stddev};
+	_distribution = std::normal_distribution<double> {vel_mean, vel_stddev};
 
     // Initialisiere Filter mit dem Mittelwert
-    std::for_each(_filterValues.begin(), _filterValues.end(), [&speed_mean](double& d){d = speed_mean;});
+    std::for_each(_filterValues.begin(), _filterValues.end(), [&vel_mean](double& d){d = vel_mean;});
 
     // Abtastrate
     _dt = dt;
@@ -26,7 +26,7 @@ Device::Device(double speed_mean, double speed_stddev, double dt)
     // Initialisiere Zustandsvektor x = (position, velocity)
     _pose_x = {
         0.0,
-        speed_mean
+        vel_mean
     };
 
     _state = DeviceState::INITILIZED;
@@ -56,7 +56,7 @@ double Device::Filter_Velocity()
 
 double Device::Calculate_Position()
 {
-    // Berechne die neue Position x(k+1) = A * x(k)
+    // Berechne die neue Position x(p) = A * x
     _pose_x = mvmul(_system_A, _pose_x);
 
     _state = DeviceState::CALCULATED;

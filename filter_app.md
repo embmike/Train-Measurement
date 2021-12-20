@@ -4,7 +4,7 @@
 
 <br>
 
-<!-- ![Blockschaltbild](./images/v_s_bsb.PNG) -->
+<!-- <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" /> -->
 <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />  
 
 <br>
@@ -144,8 +144,8 @@ private:
 
 ### <span id="link5">2.5. Definiere die Funktionsrümpfe und rufe die Schnittstelle auf</span>
 
-*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.*
-*Jede Funktion setzt einen Zusatand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
+*Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.
+Jede Funktion setzt einen Zustand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
 
 *Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstelle mittels der Zustände im Debugger*
 
@@ -293,14 +293,15 @@ double Device::Filter_Velocity()
 
 Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
 
-![Blockschaltbild](./images/system_equation.png)
+<!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%" style="float:left" /> -->
+<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" />
 
 ```C++
 // ...
 
 double Device::Calculate_Position()
 {
-    // Berechne die neue Position x(k+1) = A * x(k)
+    // Berechne die neue Position x(p) = A * x
     _pose_x = mvmul(_system_A, _pose_x);
 
     _state = DeviceState::CALCULATED;

@@ -8,10 +8,10 @@
 namespace TestSet
 {
     // Testgerät
-    constexpr double speed_mean { 80.0 };  // m/s
-    constexpr double speed_stddev { 8.0 }; // m/s
+    constexpr double velocity_mean { 80.0 };  // m/s
+    constexpr double velocity_stddev { 8.0 }; // m/s
     constexpr double dt { 0.1 };    // 100ms
-    Device device {speed_mean, speed_stddev, dt};
+    Device device {velocity_mean, velocity_stddev, dt};
     
     // Testlauf
     constexpr double time { 10.0 }; // 10s

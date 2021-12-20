@@ -25,7 +25,7 @@ public:
     };
 
     // Initialisiere das Gerät
-    Device(double speed_mean, double speed_stddev, double dt);
+    Device(double vel_mean, double vel_stddev, double dt);
 
     // Messen die Geschwindigkeit
     double Measure_Velocity();
@@ -56,7 +56,7 @@ private:
     // Berechnung der Position
     double _dt { 0.1 };
 
-    // Systemgleichung: x(k+1) = A * x(k)
+    // Systemgleichung: x(p) = A * x
     system_matrix _system_A {{ 
         {0.0,0.0}, 
         {0.0,0.0} 
