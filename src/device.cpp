@@ -29,7 +29,22 @@ Device::Device(double vel_mean, double vel_stddev, double dt)
         vel_mean
     };
 
+    _logDataStream.open(LOG_DATA_PATH.data(), std::ofstream::out);
+
+    if (_logDataStream.fail() or !_logDataStream.is_open())
+    {
+        std::cerr << "Log file could not open!" << std::endl;
+    }
+
+    _logDataStream << "time,velocity,position" << std::endl;
+
     _state = DeviceState::INITILIZED;
+}
+
+
+Device::~Device()
+{
+    _logDataStream.close();
 }
 
 
@@ -72,4 +87,17 @@ void Device::Plot(std::size_t& iter)
               << "s=" << std::setw(5) << std::setfill(' ') << Get_Position() << " m\n";
 
     _state = DeviceState::PLOTTED;
+}
+
+void Device::Store(std::size_t& iter)
+{
+    // _logDataStream << std::setprecision(1) << std::fixed << iter * _dt 
+    //                << ", " << Get_Velocity() 
+    //                << ", " << std::setw(5) << std::setfill(' ') << Get_Position()
+    //                << std::endl;
+
+    _logDataStream << std::setprecision(1) << std::fixed << iter * _dt 
+                   << "," << Get_Velocity() 
+                   << "," << Get_Position()
+                   << std::endl;
 }

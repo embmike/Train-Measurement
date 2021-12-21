@@ -5,6 +5,8 @@
 #include <array>
 #include <random>
 #include <algorithm>
+#include <string_view>
+#include <fstream>
 
 
 class Device final
@@ -24,8 +26,17 @@ public:
         PLOTTED
     };
 
+    struct TimeStamp final
+    {
+        double timeStep;
+        double velocity;
+        double position; 
+    };
+
     // Initialisiere das Gerät
     Device(double vel_mean, double vel_stddev, double dt);
+
+    ~Device();
 
     // Messen die Geschwindigkeit
     double Measure_Velocity();
@@ -38,6 +49,9 @@ public:
 
     // Plotte ein Weg-Zeit-Deiagramm
     void Plot(std::size_t& iter);
+
+    // Siche die Daten in ener Datei
+    void Store(std::size_t& iter);
 
 
 private:
@@ -71,6 +85,9 @@ private:
     void Set_Velocity(double val) {_pose_x[1] = val;}
     double Get_Velocity() {return _pose_x[1];}
     double Get_Position() {return _pose_x[0];}
+
+    std::string_view LOG_DATA_PATH { "../log_data.csv" };
+    std::ofstream _logDataStream;
 };
 
 
