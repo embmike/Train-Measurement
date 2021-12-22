@@ -4,7 +4,7 @@
 
 <br>
 
-<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />
+<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="80%" height="80%" />
 
 <!-- <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />   -->
 
@@ -294,7 +294,7 @@ double Device::Filter_Velocity()
 
 Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
 
-<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%"/> 
+<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="40%" height="40%"/> 
 
 <!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%" style="float:left" /> -->
 <!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" /> -->
