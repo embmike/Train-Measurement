@@ -4,8 +4,9 @@
 
 <br>
 
-<!-- <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" /> -->
-<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />  
+<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />
+
+<!-- <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />   -->
 
 <br>
 <br>
@@ -147,7 +148,7 @@ private:
 *Der Rohbau schreitet voran. Der Softwerker definiert die Schnittstellen-Funtionen durch Funktionsrümpfe.
 Jede Funktion setzt einen Zustand. Die Funktionen werden in der "Main"-Funktion geordnet aufgerufen*
 
-*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstelle mittels der Zustände im Debugger*
+*Nun wird der Rohbau abgenommen. Der Softwerker testet den korrekten Aufruf der Schnittstelle mittels der Zustände im Debugger.*
 
 Datei device.cpp:
 
@@ -293,8 +294,10 @@ double Device::Filter_Velocity()
 
 Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
 
+<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%"/> 
+
 <!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%" style="float:left" /> -->
-<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" />
+<!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" /> -->
 
 ```C++
 // ...
@@ -324,6 +327,30 @@ Debuggen durh die Applikation:
 ![Debug-Image](./images/debug_view4.PNG)
 
 <br>
+
+## 3.1. Messdatenanalyse
+
+Das Programm speichert während des Testlaufs Daten
+-   time
+-   measurement
+-   velocity
+-   position
+in die Messdatei log_data.csv. Mit dem Python-Script data_analysis.py werden die Datem grfisch dargestellt.
+
+**Zugeschwindigkei**
+
+![Zugposition](./images/velocity_fig.png)
+
+<br>
+
+**Zugposition**
+
+![Zugposition](./images/position_fig.png)
+
+<br>
+Der Mittelwertfilter liefert bereits ein brauchbares Ergebnis. :satisfied:
+
+<br>
 <br>
 
 ## 4. Unit-Test
@@ -337,7 +364,7 @@ Debuggen durh die Applikation:
 ## 5. Versionsmanagement mit Git
 
 Git hilft einem bei der schrittweisen Entwicklung. Jeder Entwicklungsschritt wird gesichert. Später ermöglicht es einem,
-die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichetr auf einem früheren Entwicklungschritte zrückwechseln.
+die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichter auf einem früheren Entwicklungschritte zrückwechseln.
 
 ![Debug-Image](./images/git_view.PNG)
 

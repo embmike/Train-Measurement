@@ -33,7 +33,7 @@ void Monitor_TrainDrive(std::size_t& iter)
     // 1.3. - Brechne den Weg
     train.Calculate_Position();
 
-    // 1.4. - Plotte ein Weg-Zeit-Übersicht
+    // 1.4. - Plotte eine Weg-Zeit-Übersicht
     train.Plot(iter);
     train.Store(iter);
 }

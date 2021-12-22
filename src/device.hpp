@@ -61,7 +61,7 @@ private:
 
     // Zufallsgenerator für die Geschwindigkeitsmessung
     std::mt19937 _generator {};
-	std::normal_distribution<double> _distribution;
+    std::normal_distribution<double> _distribution;
     double _measurement { 0.0 };
 
     // Filter der Geschwindigkeit
