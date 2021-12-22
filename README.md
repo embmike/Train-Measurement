@@ -330,20 +330,17 @@ Debuggen durh die Applikation:
 
 ## 3.1. Messdatenanalyse
 
-Das Programm speichert während des Testlaufs Daten
+Das Programm speichert während des Testlaufs Daten:
 -   time
 -   measurement
 -   velocity
 -   position
-in die Messdatei log_data.csv. Mit dem Python-Script data_analysis.py werden die Datem grfisch dargestellt.
 
-**Zugeschwindigkei**
+in die Messdatei log_data.csv. Das Python-Script **data_analysis.py** stellt die Daten grafisch dar:
+
 
 ![Zugposition](./images/velocity_fig.png)
 
-<br>
-
-**Zugposition**
 
 ![Zugposition](./images/position_fig.png)
 
