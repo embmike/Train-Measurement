@@ -9,7 +9,7 @@
 #include <fstream>
 
 
-class Device final
+class Device
 {
 public:
     using filter_array = std::array<double,10>;
@@ -54,7 +54,7 @@ public:
     void Store(std::size_t& iter);
 
 
-private:
+protected:
     Device() = delete;
 
     DeviceState _state { DeviceState::UNDEFINED };
@@ -86,7 +86,7 @@ private:
     double Get_Velocity() {return _pose_x[1];}
     double Get_Position() {return _pose_x[0];}
 
-    std::string_view LOG_DATA_PATH { "../log_data.csv" };
+    std::string_view LOG_DATA_PATH { "../analysis/log_data.csv" };
     std::ofstream _logDataStream;
 };
 

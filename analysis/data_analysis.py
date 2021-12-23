@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import pandas as pd
 
-pd_data = pd.read_csv("./log_data.csv")
+pd_data = pd.read_csv("./analysis/log_data.csv")
 print(pd_data.head(5))
 
 time_stamps = pd_data['time'].to_numpy()

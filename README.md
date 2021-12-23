@@ -4,7 +4,7 @@
 
 <br>
 
-<img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="80%" height="80%" />
+<img src="./images/v_s_bsb.png" alt="Blockschaltbild" width="80%" height="80%" />
 
 <!-- <img src="./images/v_s_bsb.PNG" alt="Blockschaltbild" width="50%" height="50%" />   -->
 
@@ -294,7 +294,7 @@ double Device::Filter_Velocity()
 
 Für die Berechnung der neuen Position wird Matrizenberechnung verwendet:
 
-<img src="./images/system_equation.PNG" alt="Sytemgleichung" width="40%" height="40%"/> 
+<img src="./images/system_equation.png" alt="Sytemgleichung" width="40%" height="40%"/> 
 
 <!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="50%" height="50%" style="float:left" /> -->
 <!-- <img src="./images/system_equation.PNG" alt="Sytemgleichung" width="25%" height="25%" /> -->
@@ -324,7 +324,7 @@ double Device::Calculate_Position()
 
 Debuggen durh die Applikation:
 
-![Debug-Image](./images/debug_view4.PNG)
+![Debug-Image](./images/debug_view.png)
 
 <br>
 
@@ -353,7 +353,11 @@ Der Mittelwertfilter liefert bereits ein brauchbares Ergebnis. :satisfied:
 ## 4. Unit-Test
 
 *Am Ende steht die Abhame, der Elektromeister prüft die Isolationswiderstände, der Bauleiter das gesamte Haus.*
-*Der Softwerker seine Arbeit durch Unit-Tests. Leider sind gerade alle noch beschäftigt.* :unamused:
+*Der Softwerker prüft seine Arbeit durch Unit-Tests.*
+
+Für die Unit-Tests wird GoogleTest verwendet, welches auch durch CTest ausgeführt werden kann.
+
+<img src="./images/unit_test.png" alt="Sytemgleichung" width="90%" height="90%"/> 
 
 <br>
 <br>
@@ -363,7 +367,7 @@ Der Mittelwertfilter liefert bereits ein brauchbares Ergebnis. :satisfied:
 Git hilft einem bei der schrittweisen Entwicklung. Jeder Entwicklungsschritt wird gesichert. Später ermöglicht es einem,
 die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichter auf einem früheren Entwicklungschritte zrückwechseln.
 
-![Debug-Image](./images/git_view.PNG)
+![Debug-Image](./images/git_view.png)
 
 <br>
 <br>
@@ -373,9 +377,10 @@ die Entwicklungsschritte besser nachzuvollziehen. Im Fehlerfall kann man leichte
 Mit dem Wechsel zur Objekorientierung wurden funtionale Aufrufe weiter abstahiert, die allgemeinere "for_each_iter"-Funktion zeigt es deitlich.
 Es ergibt sich eine bessere Kohäsion zwischen den Geräte-Parametern und den darauf angewendeten Geräte-Funktionen.
 
-**Offene Punkte**
--   Unit-Test
--   Messdaten in eine datei speichen
--   Messdaten mittels Python visualisieren
+<br>
+<br>
+
+## Licence
+This project is licensed under the terms of the [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 <br>
