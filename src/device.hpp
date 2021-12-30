@@ -38,7 +38,7 @@ public:
 
     ~Device();
 
-    // Messen die Geschwindigkeit
+    // Messe die Geschwindigkeit
     double Measure_Velocity();
 
     // Filtere die Geschwindigkeit

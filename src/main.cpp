@@ -24,7 +24,7 @@ void Monitor_TrainDrive(std::size_t& iter)
     // Der Zug
     Device& train { TestSet::device };
 
-    // 1.1. - Messen die Geschwindigkeit
+    // 1.1. - Messe die Geschwindigkeit
     train.Measure_Velocity();
 
     // 1.2. - Filtere die Geschwindigkeit

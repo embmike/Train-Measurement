@@ -60,7 +60,7 @@ namespace TestSet
 
 void Monitor_TrainDrive(std::size_t& iter)
 {
-    // 1.1. - Messen die Geschwindigkeit
+    // 1.1. - Messe die Geschwindigkeit
 
     // 1.2. - Filtere die Geschwindigkeit
 
@@ -80,7 +80,7 @@ int main(int, char**)
 
 <br>
 
-### <span id="link4">2.4. Deklare die Schnittstelle</span>
+### <span id="link4">2.4. Deklariere die Schnittstelle</span>
 
 *Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnistelle durch Funktionen.*
 
@@ -120,7 +120,7 @@ public:
     // Initialisiere das Gerät
     Device(double speed_mean, double speed_stddev, double dt);
 
-    // Messen die Geschwindigkeit
+    // Messe die Geschwindigkeit
     double Measure_Velocity();
 
     // Filtere die Geschwindigkeit
@@ -222,7 +222,7 @@ void Monitor_TrainDrive(std::size_t& iter)
     // Der Zug
     Device& train { TestSet::device };
 
-    // 1.1. - Messen die Geschwindigkeit
+    // 1.1. - Messe die Geschwindigkeit
     train.Measure_Velocity();
 
     // 1.2. - Filtere die Geschwindigkeit
