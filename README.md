@@ -82,7 +82,7 @@ int main(int, char**)
 
 ### <span id="link4">2.4. Deklariere die Schnittstelle</span>
 
-*Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnistelle durch Funktionen.*
+*Nun erfolgt der Rohbau. Der Softwerker deklariert die Schnittstelle durch Funktionen.*
 
 Datei functional_iter.hpp:
 
